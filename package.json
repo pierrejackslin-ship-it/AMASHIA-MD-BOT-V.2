@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node bot.js",
     "dev": "nodemon bot.js",
-    "test": "node test.js"
+    "install-deps": "npm install"
   },
-  "keywords": ["whatsapp", "bot", "md", "baileys"],
+  "keywords": ["whatsapp", "bot", "md", "baileys", "ngrok", "online"],
   "author": "pierrejackslin-ship-it",
   "license": "MIT",
   "dependencies": {
@@ -18,8 +18,8 @@
     "axios": "^1.6.0",
     "pino": "^8.14.1",
     "qrcode-terminal": "^0.12.0",
-    "fs": "^0.0.1-security",
-    "path": "^0.0.1-security"
+    "ngrok": "^5.0.0-beta.2",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
