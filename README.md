@@ -1,4 +1,4 @@
-# AMASHIA MD BOT V.1
+# AMASHIA MD BOT V.2
 ## Features
 - Auto reply 🤖
 - Group management 👥
