@@ -1,30 +1,27 @@
 {
   "name": "amashia-md-bot-v2",
-  "version": "2.0.0",
-  "description": "Advanced WhatsApp Bot with AI and Multiple Features",
+  "version": "1.0.0",
+  "description": "AMASHIA MD WhatsApp Bot built with Baileys",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
     "dev": "nodemon bot.js",
-    "install-deps": "npm install"
+    "restart": "node bot.js",
+    "pm2": "pm2 start bot.js --name amashia-bot"
   },
-  "keywords": ["whatsapp", "bot", "md", "baileys", "ngrok", "online"],
-  "author": "pierrejackslin-ship-it",
+  "author": "AMASHIA",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.x"
+  },
   "dependencies": {
-    "baileys": "^6.2.0",
-    "express": "^4.18.2",
-    "dotenv": "^16.3.1",
+    "@whiskeysockets/baileys": "^6.7.0",
     "axios": "^1.6.0",
-    "pino": "^8.14.1",
-    "qrcode-terminal": "^0.12.0",
-    "ngrok": "^5.0.0-beta.2",
-    "qrcode": "^1.5.3"
+    "dotenv": "^16.4.0",
+    "pino": "^8.17.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
-  },
-  "engines": {
-    "node": ">=16.0.0"
+    "nodemon": "^3.0.0",
+    "pm2": "^5.3.0"
   }
 }
