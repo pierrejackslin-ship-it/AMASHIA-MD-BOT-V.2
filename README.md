@@ -22,13 +22,16 @@
 
 ### 👁️ View Once / Decode
 - `.vv3` → Decode view-once messages  
-- 🔐 Works only on the bot number  
+- 🔐 Works only on the bot number 
+ 
+### - 📥statut/save
+- `.save ->📥 Save statut
+- `.sav3 ->📥 Full status save
+🔐 Works only on the bot number  
 
 ### 📊 Status Features
 - 👁️ Auto view status  
-- ❤️ Auto like status  
-- 📥 Save statut 
-- 📥 Full status save 
+- ❤️ Auto like status    
 
 ---
 
