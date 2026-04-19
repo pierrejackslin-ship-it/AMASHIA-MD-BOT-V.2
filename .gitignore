@@ -1,33 +1,85 @@
-# Dependencies
+# ==========================================
+# 📦 DEPENDENCIES
+# ==========================================
 node_modules/
 
-# Sessions (trè enpòtan pa upload sa)
+# ==========================================
+# 🔐 SESSIONS & AUTH (TRÈ SANSIB)
+# ==========================================
 sessions/
 session/
+auth_info/
+auth/
+baileys_auth/
+creds.json
 
-# Environment variables
+# ==========================================
+# 🔑 ENVIRONMENT VARIABLES
+# ==========================================
 .env
+.env.local
+.env.development
+.env.production
 
-# Logs
+# ==========================================
+# 🧾 LOG FILES
+# ==========================================
+logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# OS files
+# ==========================================
+# 💻 OS / SYSTEM FILES
+# ==========================================
 .DS_Store
 Thumbs.db
+ehthumbs.db
 
-# Backup files
+# ==========================================
+# 🗂️ TEMP / BACKUP FILES
+# ==========================================
 *~
 *.bak
 *.tmp
+*.swp
 
-# Build / cache
+# ==========================================
+# 🏗️ BUILD / CACHE
+# ==========================================
 dist/
 build/
+.cache/
+.next/
+out/
 
-# Dynamic plugins / binaries
+# ==========================================
+# ⚙️ GENERATED / BIN
+# ==========================================
 bin/
+tmp/
+temp/
 
-# IDE files
+# ==========================================
+# 🧠 IDE / EDITOR FILES
+# ==========================================
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ==========================================
+# 🐳 DOCKER (si ou itilize li pita)
+# ==========================================
+docker-compose.override.yml
+
+# ==========================================
+# 🔒 SECURITY (PA JANM UPLOAD SA YO)
+# ==========================================
+*.key
+*.pem
+*.crt
