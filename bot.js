@@ -61,7 +61,6 @@ async function startBot() {
 
     const from = msg.key.remoteJid
 
-    // ✅ DASHBOARD STATS (ENPÒTAN)
     web.addUser(from)
     web.addMessage()
 
@@ -70,16 +69,25 @@ async function startBot() {
       msg.message.extendedTextMessage?.text ||
       ""
 
-    // 👋 WELCOME (ONCE)
+    // 👋 WELCOME WITH IMAGE (PRO)
     if (!welcomedUsers.has(from)) {
       welcomedUsers.add(from)
 
       await sock.sendMessage(from, {
-        text: `👋 HELLO!
+        image: {
+          url: "https://drive.google.com/uc?export=download&id=1-ONk_ZlyFGy3ne7rmZJkwk-8pcwB9WMJ"
+        },
+        caption: `👋 HELLO!
 
 🤖 I am *${botName}*
 
 📌 I help with downloads, tools & automation
+
+🎧 Music download
+🎵 TikTok download
+🌍 Translation
+📝 Lyrics
+⚡ Automation tools
 
 👥 COMMUNITY:
 
@@ -91,7 +99,7 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 
 📋 Type *.menu* to start
 
-🚀 Enjoy!`
+🚀 Enjoy using *${botName}*`
       })
     }
 
@@ -128,7 +136,6 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
       })
     }
 
-    // 🎧 PLAY
     if (command === "play") {
       const query = args.join(" ")
       await sock.sendMessage(from, {
@@ -136,7 +143,6 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
       })
     }
 
-    // 🎵 TIKTOK
     if (command === "tiktok") {
       const link = args[0]
       await sock.sendMessage(from, {
@@ -144,7 +150,6 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
       })
     }
 
-    // 📝 LYRICS
     if (command === "lyrics") {
       const song = args.join(" ")
       await sock.sendMessage(from, {
@@ -152,7 +157,6 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
       })
     }
 
-    // 🌍 TRANSLATE
     if (command === "trad") {
       const lang = args[0]
       const text = args.slice(1).join(" ")
@@ -161,7 +165,6 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
       })
     }
 
-    // 👥 GROUP
     if (command === "group") {
       await sock.sendMessage(from, {
         text: `📢 Join Group:
@@ -169,7 +172,6 @@ https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t`
       })
     }
 
-    // 📺 CHANNEL
     if (command === "channel") {
       await sock.sendMessage(from, {
         text: `📺 Join Channel:
