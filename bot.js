@@ -7,12 +7,14 @@ const {
 } = require("@whiskeysockets/baileys")
 
 const P = require("pino")
-const web = require("./server") // 🌐 DASHBOARD LINK
+const web = require("./server") // 🌐 DASHBOARD
 
+// ================= CONFIG =================
 const prefix = process.env.BOT_PREFIX || "."
 const botName = process.env.BOT_NAME || "AMASHIA MD BOT V.2"
 const number = process.env.PAIRING_NUMBER
 
+// ================= START BOT =================
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState(
     process.env.SESSIONS_DIR || "sessions"
@@ -30,8 +32,7 @@ async function startBot() {
 
     console.log("🔑 PAIRING CODE:", code)
 
-    // 👉 SEND TO CHROME DASHBOARD
-    web.setCode(code)
+    web.setCode(code) // 👉 voye sou Chrome
   }
 
   sock.ev.on("creds.update", saveCreds)
@@ -53,7 +54,7 @@ async function startBot() {
     }
   })
 
-  // 👋 WELCOME + COMMANDS
+  // ================= MESSAGES =================
   const welcomedUsers = new Set()
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
@@ -67,7 +68,7 @@ async function startBot() {
       msg.message.extendedTextMessage?.text ||
       ""
 
-    // 👋 WELCOME
+    // 👋 WELCOME (ONCE)
     if (!welcomedUsers.has(from)) {
       welcomedUsers.add(from)
 
@@ -76,10 +77,23 @@ async function startBot() {
 
 🤖 I am *${botName}*
 
-📌 Type *.menu* to start`
+📌 I help with downloads, tools & automation
+
+👥 COMMUNITY:
+
+📢 Group:
+https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t
+
+📺 Channel:
+https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
+
+📋 Type *.menu* to start
+
+🚀 Enjoy!`
       })
     }
 
+    // ================= COMMAND SYSTEM =================
     if (!body.startsWith(prefix)) return
 
     const args = body.slice(prefix.length).trim().split(" ")
@@ -90,11 +104,25 @@ async function startBot() {
       await sock.sendMessage(from, {
         text: `🤖 *${botName}*
 
-📋 MENU:
-.play
-.tiktok
-.lyrics
-.trad`
+📋 COMMAND MENU:
+
+🎧 MEDIA
+.play <song>
+.tiktok <link>
+
+📝 TEXT
+.lyrics <song>
+.trad <lang> <text>
+
+👥 COMMUNITY
+.group
+.channel
+
+🔗 LINKS:
+📢 https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t
+📺 https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
+
+💡 Powered by AMASHIA 🚀`
       })
     }
 
@@ -105,7 +133,49 @@ async function startBot() {
         text: `🎧 Searching: ${query}`
       })
     }
+
+    // 🎵 TIKTOK
+    if (command === "tiktok") {
+      const link = args[0]
+      await sock.sendMessage(from, {
+        text: `📥 Processing TikTok:\n${link}`
+      })
+    }
+
+    // 📝 LYRICS
+    if (command === "lyrics") {
+      const song = args.join(" ")
+      await sock.sendMessage(from, {
+        text: `📝 Searching lyrics:\n${song}`
+      })
+    }
+
+    // 🌍 TRANSLATE
+    if (command === "trad") {
+      const lang = args[0]
+      const text = args.slice(1).join(" ")
+      await sock.sendMessage(from, {
+        text: `🌍 Translate to ${lang}:\n${text}`
+      })
+    }
+
+    // 👥 GROUP
+    if (command === "group") {
+      await sock.sendMessage(from, {
+        text: `📢 Join Group:
+https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t`
+      })
+    }
+
+    // 📺 CHANNEL
+    if (command === "channel") {
+      await sock.sendMessage(from, {
+        text: `📺 Join Channel:
+https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k`
+      })
+    }
   })
 }
 
+// ================= RUN =================
 startBot()
