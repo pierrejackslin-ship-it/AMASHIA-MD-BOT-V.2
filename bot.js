@@ -99,7 +99,11 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 
 📋 Type *.menu* to start
 
-🚀 Enjoy using *${botName}*`
+🚀 Enjoy using *${botName}*
+
+━━━━━━━━━━━━━━━
+⚙️ Made in *AMASHIA TECH*
+━━━━━━━━━━━━━━━`
       })
     }
 
@@ -132,7 +136,8 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 📢 https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t
 📺 https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 
-💡 Powered by AMASHIA 🚀`
+💡 Powered by AMASHIA 🚀
+⚙️ Made in *AMASHIA TECH*`
       })
     }
 
