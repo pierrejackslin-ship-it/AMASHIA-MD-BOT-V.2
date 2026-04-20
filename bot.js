@@ -7,14 +7,12 @@ const {
 } = require("@whiskeysockets/baileys")
 
 const P = require("pino")
-const web = require("./server") // 🌐 DASHBOARD
+const web = require("./server")
 
-// ================= CONFIG =================
 const prefix = process.env.BOT_PREFIX || "."
 const botName = process.env.BOT_NAME || "AMASHIA MD BOT V.2"
 const number = process.env.PAIRING_NUMBER
 
-// ================= START BOT =================
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState(
     process.env.SESSIONS_DIR || "sessions"
@@ -26,7 +24,6 @@ async function startBot() {
     logger: P({ level: "silent" })
   })
 
-  // 🔑 PAIRING CODE
   if (!sock.authState.creds.registered) {
     const code = await sock.requestPairingCode(number)
     console.log("🔑 PAIRING CODE:", code)
@@ -35,7 +32,6 @@ async function startBot() {
 
   sock.ev.on("creds.update", saveCreds)
 
-  // 🔄 CONNECTION STATUS
   sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
     if (connection === "open") {
       console.log("✅ Connected:", botName)
@@ -52,7 +48,6 @@ async function startBot() {
     }
   })
 
-  // ================= MESSAGES =================
   const welcomedUsers = new Set()
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
@@ -69,7 +64,7 @@ async function startBot() {
       msg.message.extendedTextMessage?.text ||
       ""
 
-    // 👋 WELCOME WITH IMAGE (PRO)
+    // 👋 WELCOME
     if (!welcomedUsers.has(from)) {
       welcomedUsers.add(from)
 
@@ -107,13 +102,11 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
       })
     }
 
-    // ================= COMMAND SYSTEM =================
     if (!body.startsWith(prefix)) return
 
     const args = body.slice(prefix.length).trim().split(" ")
     const command = args.shift().toLowerCase()
 
-    // 📋 MENU
     if (command === "menu") {
       await sock.sendMessage(from, {
         text: `🤖 *${botName}*
@@ -137,7 +130,7 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 📺 https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 
 💡 Powered by AMASHIA 🚀
-⚙️ Made in *AMASHIA TECH*`
+⚙️ Made in *TOPFEROS TECH*`
       })
     }
 
@@ -186,5 +179,4 @@ https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k`
   })
 }
 
-// ================= RUN =================
 startBot()
