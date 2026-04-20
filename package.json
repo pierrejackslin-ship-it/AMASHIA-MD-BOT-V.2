@@ -1,7 +1,7 @@
 {
   "name": "amashia-md-bot-v2",
   "version": "1.0.0",
-  "description": "AMASHIA MD WhatsApp Bot built with Baileys",
+  "description": "AMASHIA MD WhatsApp Bot built with Baileys - Fast, Stable, 24/7",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.0",
-    "axios": "^1.6.0",
     "dotenv": "^16.4.0",
+    "express": "^4.19.2",
     "pino": "^8.17.0"
   },
   "devDependencies": {
