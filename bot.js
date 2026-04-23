@@ -13,7 +13,6 @@ const prefix = process.env.BOT_PREFIX || "."
 const botName = process.env.BOT_NAME || "AMASHIA MD BOT V.2"
 const number = process.env.PAIRING_NUMBER
 
-// ================= START BOT =================
 async function startBot() {
   try {
     if (!number) {
@@ -31,7 +30,7 @@ async function startBot() {
       logger: P({ level: "silent" })
     })
 
-    // ================= PAIRING CODE =================
+    // 🔑 PAIRING
     if (!sock.authState.creds.registered) {
       const code = await sock.requestPairingCode(number)
       console.log("🔑 PAIRING CODE:", code)
@@ -40,7 +39,7 @@ async function startBot() {
 
     sock.ev.on("creds.update", saveCreds)
 
-    // ================= CONNECTION =================
+    // 🔄 CONNECTION
     sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
       if (connection === "open") {
         console.log("✅ Connected:", botName)
@@ -59,7 +58,7 @@ async function startBot() {
 
     const welcomedUsers = new Set()
 
-    // ================= MESSAGES =================
+    // 💬 MESSAGES
     sock.ev.on("messages.upsert", async ({ messages }) => {
       const msg = messages[0]
       if (!msg || !msg.message) return
@@ -74,7 +73,7 @@ async function startBot() {
         msg.message.extendedTextMessage?.text ||
         ""
 
-      // ================= WELCOME =================
+      // 👋 WELCOME
       if (!welcomedUsers.has(from)) {
         welcomedUsers.add(from)
 
@@ -94,8 +93,8 @@ async function startBot() {
 
 📋 Type *.menu* to start
 
-🚀 Enjoy!
-━━━━━━━━━━━━━━━`
+━━━━━━━━━━━━━━━
+💡 Made in *TOPFEROS TECH* 🚀`
         })
       }
 
@@ -104,8 +103,9 @@ async function startBot() {
       const args = body.slice(prefix.length).trim().split(" ")
       const command = args.shift().toLowerCase()
 
-      // ================= COMMANDS =================
+      // 📋 COMMANDS
       switch (command) {
+
         case "menu":
           await sock.sendMessage(from, {
             text: `🤖 *${botName}*
@@ -128,4 +128,32 @@ async function startBot() {
 📢 https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t
 📺 https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k
 
-💡 Made in TOPFEROS TECH 🚀`
+━━━━━━━━━━━━━━━
+💡 Made in *TOPFEROS TECH* 🚀`
+          })
+          break
+
+        case "group":
+          await sock.sendMessage(from, {
+            text: `📢 Join Group:
+https://chat.whatsapp.com/LdT5MwR8Vhm7bMlQ3I05YF?mode=gi_t`
+          })
+          break
+
+        case "channel":
+          await sock.sendMessage(from, {
+            text: `📺 Join Channel:
+https://whatsapp.com/channel/0029VbCqMJyCHDyeLQvGQR2k`
+          })
+          break
+
+      }
+
+    })
+
+  } catch (err) {
+    console.log("❌ ERROR:", err)
+  }
+}
+
+startBot()
