@@ -1,4 +1,5 @@
 const express = require("express")
+const fs = require("fs")
 const app = express()
 
 app.use(express.json())
@@ -9,6 +10,18 @@ let totalMessages = 0
 let totalUsers = new Set()
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "amashia"
+
+// ================= DATABASE =================
+const dbFile = "./database.json"
+
+function getDB(){
+  if (!fs.existsSync(dbFile)) return {}
+  return JSON.parse(fs.readFileSync(dbFile))
+}
+
+function saveDB(data){
+  fs.writeFileSync(dbFile, JSON.stringify(data, null, 2))
+}
 
 // ================= HOME LOGIN =================
 app.get("/", (req, res) => {
@@ -33,7 +46,7 @@ app.get("/", (req, res) => {
   `)
 })
 
-// ================= AUTH CHECK =================
+// ================= AUTH =================
 function checkAuth(req, res, next) {
   const pass = req.query.pass
   if (pass !== ADMIN_PASSWORD) {
@@ -109,13 +122,51 @@ app.get("/api", checkAuth, (req, res) => {
   })
 })
 
-// ================= RESTART BOT =================
+// ================= REFERRAL PAGE =================
+app.get("/referral", (req, res) => {
+  const code = req.query.code
+
+  res.send(`
+  <html>
+  <body style="background:#111;color:white;text-align:center;padding:40px;font-family:Arial">
+
+    <h1>🎁 Referral System</h1>
+
+    <p>Your Code:</p>
+    <h2>${code || "NO CODE"}</h2>
+
+    <p>Share this link:</p>
+    <input style="width:90%" value="http://localhost:${process.env.PORT || 3000}/referral?code=${code}" />
+
+  </body>
+  </html>
+  `)
+})
+
+// ================= TRACK REF =================
+app.get("/ref", (req, res) => {
+  const ref = req.query.code
+  let db = getDB()
+
+  if (!ref) return res.json({ error: "no code" })
+
+  let owner = Object.keys(db).find(u => db[u].code === ref)
+
+  if (owner) {
+    db[owner].referrals = (db[owner].referrals || 0) + 1
+    saveDB(db)
+  }
+
+  res.json({ success: true })
+})
+
+// ================= RESTART =================
 app.get("/restart", checkAuth, (req, res) => {
   res.send("Restarting...")
   process.exit()
 })
 
-// ================= EXPORT FUNCTIONS =================
+// ================= EXPORT =================
 module.exports = {
   setCode: (c) => (pairingCode = c),
   setStatus: (s) => (botStatus = s),
@@ -123,7 +174,7 @@ module.exports = {
   addMessage: () => totalMessages++
 }
 
-// ================= START SERVER =================
+// ================= START =================
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
